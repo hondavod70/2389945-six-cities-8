@@ -7,7 +7,6 @@ import { CommentService } from './comment-service.interface.js';
 import { OfferService } from '../offer/index.js';
 import { fillDTO } from '../../helpers/index.js';
 import { CommentRdo } from './rdo/comment.rdo.js';
-import { CreateCommentRequest } from './types/create-comment-request.type.js';
 import { CreateCommentDto } from './dto/create-comment.dto.js';
 import {
   BaseController,
@@ -17,6 +16,7 @@ import {
   ValidateObjectIdMiddleware,
   PrivateRouteMiddleware,
   DocumentExistsMiddleware,
+  RequestBody,
 } from '../../libs/rest/index.js';
 import { ParamOfferId } from '../offer/type/param-offerid.type.js';
 
@@ -64,13 +64,16 @@ export default class CommentController extends BaseController {
   }
 
   public async create(
-    { body, tokenPayload }: CreateCommentRequest,
+    req: Request<ParamOfferId, RequestBody, CreateCommentDto>,
     res: Response
   ): Promise<void> {
-    if (!(await this.offerService.exists(body.offerId))) {
+    const { body, tokenPayload } = req;
+    const { params } = req;
+
+    if (!(await this.offerService.exists(params.offerId))) {
       throw new HttpError(
         StatusCodes.NOT_FOUND,
-        `Offer with id ${body.offerId} not found.`,
+        `Offer with id ${params.offerId} not found.`,
         'CommentController'
       );
     }
@@ -78,8 +81,9 @@ export default class CommentController extends BaseController {
     const comment = await this.commentService.create({
       ...body,
       userId: tokenPayload.id,
+      offerId: params.offerId,
     });
-    await this.offerService.incCommentCount(body.offerId);
+    await this.offerService.incCommentCount(params.offerId);
     this.created(res, fillDTO(CommentRdo, comment));
   }
 }
