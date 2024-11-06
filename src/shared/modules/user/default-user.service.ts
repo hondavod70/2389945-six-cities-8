@@ -22,7 +22,7 @@ export class DefaultUserService implements UserService {
   ): Promise<DocumentType<UserEntity>> {
     const user = new UserEntity({
       ...dto,
-      avatarPath: DEFAULT_AVATAR_FILE_NAME,
+      avatarUrl: DEFAULT_AVATAR_FILE_NAME,
     });
     user.setPassword(dto.password, salt);
 

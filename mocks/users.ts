@@ -4,19 +4,19 @@ export const Users: User[] = [
   {
     name: 'ivanpetrov',
     email: 'ivanpetrov@gmail.com',
-    avatarPath: 'avatar1.jpg',
+    avatarUrl: '/static/avatar1.jpg',
     isPro: true
   },
   {
     name: 'petrivanov',
     email: 'petrivanov@gmail.com',
-    avatarPath: 'avatar2.jpg',
+    avatarUrl: '/static/avatar2.jpg',
     isPro: false
   },
   {
     name: 'vasyapupkin',
     email: 'vasyapupkin@gmail.com',
-    avatarPath: 'avatar3.jpg',
+    avatarUrl: '/static/avatar3.jpg',
     isPro: false
   }
 ];
