@@ -6,7 +6,7 @@ export class CommentRdo {
   public id: string;
 
   @Expose()
-  public text: string;
+  public comment: string;
 
   @Expose({ name: 'createdAt' })
   public date: string;

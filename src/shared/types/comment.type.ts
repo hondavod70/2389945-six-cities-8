@@ -1,6 +1,6 @@
 export type Comment = {
   offerId: string;
-  text: string;
+  comment: string;
   postDate: Date;
   rating: number;
   userId: string;
